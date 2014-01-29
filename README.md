@@ -4,19 +4,17 @@
 
 Download the source files from the `build` directory, or use [Bower](http://www.bower.io/).
 
-```
+```bash
 $ bower install
 ```
 
 Then you're good to go. You can listen for "iostap" events on any old element. For example:
 
-```
+```js
 $("a.link").on("iostap", function(e) {
   console.log(e.currentTarget);
 })
 ```
-
----------------
 
 ### Tell me more
 
@@ -33,16 +31,16 @@ The library aims to acheive several goals in imitating the native iOS tap:
   - The library reverts to click events if `getComputedStyle` is unavailable,
   making it compatible with IE 8.
 
----------------
-
 ### Developing and testing
 
 There is a `Cakefile` for building, watching and linting. All these commands can be run with `cake`.
 
-```
+```bash
 $ cake build         # Build the library
 
 $ cake watch         # Watch for changes
 
 $ cake lint          # Lint the compiled javascript.
 ```
+
+Feel free to submit [issues](https://github.com/stephenhutchings/zepto.iostap/issues) or make [pull](https://github.com/stephenhutchings/zepto.iostap/pulls) requests.
