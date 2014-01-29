@@ -1,6 +1,6 @@
 {
   "name": "zepto.iostap",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A micro-library for iOS-like tap events in the browser",
   "main": "zepto.iostap.js",
   "scripts": {
