@@ -1,0 +1,25 @@
+{
+  "name": "zepto.iostap",
+  "version": "0.0.1",
+  "description": "A micro-library for iOS-like tap events in the browser",
+  "main": "zepto.iostap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephenhutchings/zepto.iostap.git"
+  },
+  "author": "Stephen Hutchings",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stephenhutchings/zepto.iostap/issues"
+  },
+  "dependencies": {
+    "flour": "~0.5.6",
+    "uglify-js": "~2.4.12",
+    "coffee-script": "~1.7.0",
+    "jshint": "~2.4.3",
+    "rimraf": "~2.2.6"
+  }
+}
