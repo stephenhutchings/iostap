@@ -2,7 +2,7 @@
 // A micro-library for iOS-like tap events in the browser
 // https://github.com/stephenhutchings/zepto.iostap
 (function(window, document) {
-  var activeClass, checkForScroll, eventName, getFirstTouch, isTouch, minimumActiveTime, nearBuffer, nearEnough, onCancel, onEnd, onMove, onStart, parentIfText, scrollBuffer, toggleActiveState, touch, _cancel, _end, _move, _start;
+  var activeClass, attachEvents, checkForScroll, detachEvents, eventName, getFirstTouch, isTouch, minimumActiveTime, nearBuffer, nearEnough, onCancel, onEnd, onMove, onStart, parentIfText, scrollBuffer, toggleActiveState, touch, _cancel, _end, _move, _start;
   touch = {};
   isTouch = "ontouchstart" in window;
   _start = isTouch ? "touchstart" : "mousedown";
@@ -55,6 +55,18 @@
     touch.el.toggleClass(activeClass, nearEnough);
     return touch.el.parents().toggleClass(activeClass, nearEnough);
   };
+  attachEvents = function() {
+    $(document.body).on(_move, onMove).on(_end, onEnd);
+    if (_cancel) {
+      return $(document.body).on(_cancel, onCancel);
+    }
+  };
+  detachEvents = function() {
+    $(document.body).off(_move, onMove).off(_end, onEnd);
+    if (_cancel) {
+      return $(document.body).off(_cancel, onCancel);
+    }
+  };
   onStart = function(e) {
     var _e;
     _e = getFirstTouch(e);
@@ -72,7 +84,8 @@
       }
     });
     toggleActiveState(false);
-    return onMove(e);
+    onMove(e);
+    return attachEvents();
   };
   onMove = function(e) {
     var _e;
@@ -86,21 +99,20 @@
     if (nearEnough) {
       touch.el.trigger(eventName);
     }
-    return window.setTimeout((function() {
+    window.setTimeout((function() {
       toggleActiveState(true);
       touch = {};
     }), minimumActiveTime);
+    return detachEvents();
   };
   onCancel = function() {
     toggleActiveState(true);
     touch = {};
+    return detachEvents();
   };
   if (window.getComputedStyle) {
     $(document).ready(function() {
-      $(document.body).on(_start, onStart).on(_move, onMove).on(_end, onEnd);
-      if (_cancel) {
-        return $(document.body).on(_cancel, onCancel);
-      }
+      return $(document.body).on(_start, onStart);
     });
   } else {
     $(document).ready(function() {

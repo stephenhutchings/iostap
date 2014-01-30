@@ -63,6 +63,28 @@
     touch.el.toggleClass activeClass, nearEnough
     touch.el.parents().toggleClass activeClass, nearEnough
 
+  # Attach move and end events.
+  # Only connect the cancel event if it exists.
+  attachEvents = ->
+    $(document.body)
+      .on(_move, onMove)
+      .on(_end, onEnd)
+
+    if _cancel
+      $(document.body)
+        .on(_cancel, onCancel)
+
+  # Detach move and end events.
+  # Only disconnect the cancel event if it exists.
+  detachEvents = ->
+    $(document.body)
+      .off(_move, onMove)
+      .off(_end, onEnd)
+
+    if _cancel
+      $(document.body)
+        .off(_cancel, onCancel)
+
   # Store the event, and the current co-ordinates of the start event. Retain
   # a cached reference to the original DOM element, and any parent elements
   # that have their overflow set to "scroll". Toggle the class for all elements
@@ -84,6 +106,7 @@
 
     toggleActiveState(false)
     onMove(e)
+    attachEvents()
 
   # Store consequent movements on the users pointer for state change comparison.
   onMove = (e) ->
@@ -98,30 +121,25 @@
   onEnd = ->
     checkForScroll()
     touch.el.trigger eventName if nearEnough
+
     window.setTimeout (->
       toggleActiveState(true)
       touch = {}
       return
     ), minimumActiveTime
 
+    detachEvents()
+
   # Doing final state changes and clear the touch object.
   onCancel = ->
     toggleActiveState(true)
     touch = {}
-    return
+    detachEvents()
 
   # If the required getComputedStyle is available, set up events as normal.
-  # Only connect the cancel event if it exists.
   if window.getComputedStyle
     $(document).ready ->
-      $(document.body)
-        .on(_start, onStart)
-        .on(_move, onMove)
-        .on(_end, onEnd)
-
-      if _cancel
-        $(document.body)
-          .on(_cancel, onCancel)
+      $(document.body).on(_start, onStart)
 
   # If getComputedStyle isn't supported, the touch module will not work
   # properly, so we'll just map clicks to "iostap".
