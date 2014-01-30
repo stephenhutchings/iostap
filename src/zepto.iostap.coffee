@@ -35,15 +35,14 @@
 
   # If the current node is text, return it's parent element.
   parentIfText = (node) ->
-    (if "tagName" of node then node else node.parentNode)
+    if "tagName" of node then node else node.parentNode
 
   # If touch events are available, return the first touch of the touches array.
   getFirstTouch = (e) ->
-    (if isTouch then e.touches[0] else e)
+    if isTouch then e.touches[0] else e
 
   # If any parents scroll by more than the buffer, cancel the event.
   checkForScroll = ->
-    return unless touch.scrollParents
     for el, i in touch.scrollParents
       if Math.abs(touch.scrollOffsets[i] - el.scrollTop) > scrollBuffer
         nearEnough = false
@@ -60,8 +59,10 @@
                  not isEnd
 
     checkForScroll()
-    touch.el.toggleClass activeClass, nearEnough
-    touch.el.parents().toggleClass activeClass, nearEnough
+    touch.el
+      .toggleClass(activeClass, nearEnough)
+      .parents()
+      .toggleClass(activeClass, nearEnough)
 
   # Attach move and end events.
   # Only connect the cancel event if it exists.
@@ -99,8 +100,8 @@
       scrollParents: []
       scrollOffsets: []
 
-    touch.el.parents().each (el) ->
-      if window.getComputedStyle?(this).overflow is "scroll"
+    touch.el.parents().each ->
+      if window.getComputedStyle(this).overflow is "scroll"
         touch.scrollParents.push this
         touch.scrollOffsets.push @scrollTop
 
@@ -145,8 +146,8 @@
   # properly, so we'll just map clicks to "iostap".
   else
     $(document).ready ->
-      $("body")
-        .on("click", (e) -> $(e.target).trigger("iostap"))
+      $(document.body).on("click", (e) ->
+        $(e.target).trigger("iostap"))
 
   # Add the event to Zepto.
   $.fn[eventName] = (callback) ->

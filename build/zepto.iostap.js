@@ -31,9 +31,6 @@
   };
   checkForScroll = function() {
     var el, i, _i, _len, _ref, _results;
-    if (!touch.scrollParents) {
-      return;
-    }
     _ref = touch.scrollParents;
     _results = [];
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
@@ -52,8 +49,7 @@
     }
     nearEnough = Math.abs(touch.x1 - touch.x2) < nearBuffer && Math.abs(touch.y1 - touch.y2) < nearBuffer && !isEnd;
     checkForScroll();
-    touch.el.toggleClass(activeClass, nearEnough);
-    return touch.el.parents().toggleClass(activeClass, nearEnough);
+    return touch.el.toggleClass(activeClass, nearEnough).parents().toggleClass(activeClass, nearEnough);
   };
   attachEvents = function() {
     $(document.body).on(_move, onMove).on(_end, onEnd);
@@ -77,8 +73,8 @@
       scrollParents: [],
       scrollOffsets: []
     };
-    touch.el.parents().each(function(el) {
-      if ((typeof window.getComputedStyle === "function" ? window.getComputedStyle(this).overflow : void 0) === "scroll") {
+    touch.el.parents().each(function() {
+      if (window.getComputedStyle(this).overflow === "scroll") {
         touch.scrollParents.push(this);
         return touch.scrollOffsets.push(this.scrollTop);
       }
@@ -116,7 +112,7 @@
     });
   } else {
     $(document).ready(function() {
-      return $("body").on("click", function(e) {
+      return $(document.body).on("click", function(e) {
         return $(e.target).trigger("iostap");
       });
     });
