@@ -98,7 +98,7 @@
   if (window.getComputedStyle) {
     $(document).ready(function() {
       $(document.body).on(_start, onStart).on(_move, onMove).on(_end, onEnd);
-      if (_cancel != null) {
+      if (_cancel) {
         return $(document.body).on(_cancel, onCancel);
       }
     });

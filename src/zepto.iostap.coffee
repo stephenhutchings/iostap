@@ -119,7 +119,7 @@
         .on(_move, onMove)
         .on(_end, onEnd)
 
-      if _cancel?
+      if _cancel
         $(document.body)
           .on(_cancel, onCancel)
 
