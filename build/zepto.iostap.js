@@ -1,18 +1,19 @@
-// zepto.iostap - v0.0.1 - MIT
+// zepto.iostap - v0.0.3 - MIT
 // A micro-library for iOS-like tap events in the browser
 // https://github.com/stephenhutchings/zepto.iostap
 (function(window, document) {
-  var activeClass, checkForScroll, eventName, getFirstTouch, isTouch, nearBuffer, nearEnough, onCancel, onEnd, onMove, onStart, parentIfText, scrollBuffer, toggleActiveState, touch, _cancel, _end, _move, _start;
+  var activeClass, checkForScroll, eventName, getFirstTouch, isTouch, minimumActiveTime, nearBuffer, nearEnough, onCancel, onEnd, onMove, onStart, parentIfText, scrollBuffer, toggleActiveState, touch, _cancel, _end, _move, _start;
   touch = {};
   isTouch = "ontouchstart" in window;
   _start = isTouch ? "touchstart" : "mousedown";
   _move = isTouch ? "touchmove" : "mousemove";
   _end = isTouch ? "touchend" : "mouseup";
-  _cancel = isTouch ? "touchcancel" : "mouseup";
+  _cancel = isTouch ? "touchcancel" : void 0;
   nearBuffer = Math.pow(window.innerHeight * window.innerWidth, 0.35);
   scrollBuffer = nearBuffer / 5;
   activeClass = "__active";
   eventName = "iostap";
+  minimumActiveTime = 100;
   nearEnough = false;
   parentIfText = function(node) {
     if ("tagName" in node) {
@@ -88,7 +89,7 @@
     return window.setTimeout((function() {
       toggleActiveState(true);
       touch = {};
-    }), 100);
+    }), minimumActiveTime);
   };
   onCancel = function() {
     toggleActiveState(true);
@@ -96,7 +97,10 @@
   };
   if (window.getComputedStyle) {
     $(document).ready(function() {
-      return $(document.body).on(_start, onStart).on(_move, onMove).on(_end, onEnd).on(_cancel, onCancel);
+      $(document.body).on(_start, onStart).on(_move, onMove).on(_end, onEnd);
+      if (_cancel != null) {
+        return $(document.body).on(_cancel, onCancel);
+      }
     });
   } else {
     $(document).ready(function() {

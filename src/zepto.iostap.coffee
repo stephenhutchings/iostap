@@ -14,7 +14,7 @@
   _start =  if isTouch then "touchstart" else "mousedown"
   _move =   if isTouch then "touchmove" else "mousemove"
   _end =    if isTouch then "touchend" else "mouseup"
-  _cancel = if isTouch then "touchcancel" else "mouseup"
+  _cancel = if isTouch then "touchcancel"
 
   # Buffers are proportional to overall size of the window. Smaller devices
   # should require greater accuracy.
@@ -26,6 +26,9 @@
 
   # The name of the event.
   eventName = "iostap"
+
+  # Time before the state is removed from the active element.
+  minimumActiveTime = 100
 
   # Whether the current position is near enough to trigger the event.
   nearEnough = false
@@ -90,8 +93,8 @@
     toggleActiveState(false)
 
   # Check that no scroll has occured, and trigger the event if the pointer is
-  # near enough. Wait 100ms before doing final state changes and clearing the
-  # touch object.
+  # near enough. Wait the minimum time before doing final state changes and
+  # clearing the touch object.
   onEnd = ->
     checkForScroll()
     touch.el.trigger eventName if nearEnough
@@ -99,7 +102,7 @@
       toggleActiveState(true)
       touch = {}
       return
-    ), 100
+    ), minimumActiveTime
 
   # Doing final state changes and clear the touch object.
   onCancel = ->
@@ -108,13 +111,17 @@
     return
 
   # If the required getComputedStyle is available, set up events as normal.
+  # Only connect the cancel event if it exists.
   if window.getComputedStyle
     $(document).ready ->
       $(document.body)
         .on(_start, onStart)
         .on(_move, onMove)
         .on(_end, onEnd)
-        .on(_cancel, onCancel)
+
+      if _cancel?
+        $(document.body)
+          .on(_cancel, onCancel)
 
   # If getComputedStyle isn't supported, the touch module will not work
   # properly, so we'll just map clicks to "iostap".
