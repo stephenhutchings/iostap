@@ -1,0 +1,91 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #00a99d;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family:sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+#wrapper {
+  width: 240px;
+  padding: 40px;
+  font-weight: lighter;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #00988d;
+}
+
+small {
+  font-size: 0.75em;
+}
+
+h1,
+hr,
+p,
+.well {
+  margin: 0 0 12px;
+}
+
+.well {
+  background-color: #00988d;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.button {
+  color: #666;
+  margin: 12px;
+  display: block;
+  height: 23px;
+  line-height: 24px;
+  padding: 8px;
+  text-align: center;
+  background-color: #fff;
+  background-image: -webkit-linear-gradient(top, #fff 0%, #eee 100%);
+  background-image: -moz-linear-gradient(top, #fff 0%, #eee 100%);
+  background-image: -ms-linear-gradient(top, #fff 0%, #eee 100%);
+  background-image: -o-linear-gradient(top, #fff 0%, #eee 100%);
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.button.__active {
+  padding: 9px 8px 7px;
+  background-image: -webkit-linear-gradient(bottom, #eee 0%, #ddd 100%);
+  background-image: -moz-linear-gradient(bottom, #eee 0%, #ddd 100%);
+  background-image: -ms-linear-gradient(bottom, #eee 0%, #ddd 100%);
+  background-image: -o-linear-gradient(bottom, #eee 0%, #ddd 100%);
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  height: 240px;
+}
+
+.list li {
+  height: 23px;
+  line-height: 24px;
+  padding: 8px;
+  border-bottom: 1px solid #00a99d;
+}
+
+.list li.__active {
+  background-color: #007f73;
+}
