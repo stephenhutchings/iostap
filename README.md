@@ -1,6 +1,6 @@
 ## zepto.iostap
 
-See the [demo](http://stephenhutchings.github.io/zepto.iostap/demo/)
+See the [demo](http://stephenhutchings.github.io/zepto.iostap/demo/).
 
 ### How to use it
 
@@ -38,9 +38,7 @@ There is a `Cakefile` for building, watching and linting. All these commands can
 
 ```bash
 $ cake build    # Build the library
-
 $ cake watch    # Watch for changes
-
 $ cake lint     # Lint the compiled javascript.
 ```
 
