@@ -1,5 +1,7 @@
 ## zepto.iostap
 
+See the [demo](http://stephenhutchings.github.io/zepto.iostap/demo/)
+
 ### How to use it
 
 Download the source files from the `build` directory, or use [Bower](http://www.bower.io/).
