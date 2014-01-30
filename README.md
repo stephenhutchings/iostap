@@ -5,7 +5,7 @@
 Download the source files from the `build` directory, or use [Bower](http://www.bower.io/).
 
 ```bash
-$ bower install
+$ bower install zepto.iostap
 ```
 
 Then you're good to go. You can listen for `"iostap"` events on any old element. For example:
