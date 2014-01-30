@@ -3,36 +3,52 @@ body {
   margin: 0;
   padding: 0;
   background-color: #00a99d;
+  position: relative;
   color: #fff;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  font-family:sans-serif;
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
 
 #wrapper {
-  width: 240px;
-  padding: 40px;
+  padding: 12px;
   font-weight: lighter;
 }
 
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: inherit;
+}
+
+.column {
+  margin: 12px;
+  width: 272px;
+  float: left;
+  border-bottom: 1px solid #00988d;
+}
+
 h1 {
-  font-size: 40px;
+  font-size: 36px;
+  margin: 12px 0;
+  line-height: 1;
 }
 
-hr {
-  border: none;
-  border-top: 1px solid #00988d;
+h4 {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1;
 }
 
-small {
-  font-size: 0.75em;
+pre {
+  background-color: #4cbfb4;
+  padding: 4px;
+  border-radius: 2px;
 }
 
-h1,
 hr,
 p,
 .well {
@@ -84,8 +100,59 @@ p,
   line-height: 24px;
   padding: 8px;
   border-bottom: 1px solid #00a99d;
+  -webkit-transition: background-color 300ms;
+  -moz-transition: background-color 300ms;
+  -ms-transition: background-color 300ms;
+  -o-transition: background-color 300ms;
+  transition: background-color 300ms;
 }
 
 .list li.__active {
   background-color: #007f73;
+}
+
+.response {
+  position: fixed;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  border-radius: 0 0 4px 4px;
+  background-color: #007f73;
+  padding: 8px;
+  opacity: 0;
+  font-family: monospace;
+  -webkit-transform: translate3d(0, -100%, 0);
+  -moz-transform: translate3d(0, -100%, 0);
+  -ms-transform: translate3d(0, -100%, 0);
+  -o-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+  -webkit-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
+  -moz-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
+  -ms-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
+  -o-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
+  transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.response-active {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+@media screen and (min-width: 321px) {
+  .column {
+    min-height: 400px;
+    border-top: 1px solid #00988d;
+    margin: 24px;
+  }
+
+  h4 {
+    margin-top: 28px;
+  }
 }
