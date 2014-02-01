@@ -1,4 +1,4 @@
-/* zepto.iostap - v0.0.3 - MIT */
+/* zepto.iostap - v0.0.4 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/zepto.iostap.git */
 (function(window, document) {
