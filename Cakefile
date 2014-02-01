@@ -4,15 +4,21 @@ flour = require "flour"
 rmdir = require "rimraf"
 
 # Name and version taken from package
-config = require('./bower.json')
+config = require('./package.json')
 
 # Prepend files with info comments
 prepend = """// #{config.name} - v#{config.version} - #{config.license}
              // #{config.description}
-             // #{config.homepage}\n"""
+             // #{config.repository.url}\n"""
 
 # Bare coffeescript
 flour.compilers.coffee.bare = true
+
+# Update bower.json, to match package.json
+# Using npm version will therefore update bower
+task "build:bower", ->
+  bower.version = config.version
+  fs.writeFile "bower.json", JSON.stringify(bower, null, 2) + "\n"
 
 # Remove directory, compile and uglify js
 task "build", ->
