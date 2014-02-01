@@ -2,43 +2,48 @@
 fs = require "fs"
 flour = require "flour"
 rmdir = require "rimraf"
+jade = require "jade"
 
 # Name and version taken from package
 config = require('./package.json')
+bower = require('./bower.json')
 
 # Prepend files with info comments
-prepend = """// #{config.name} - v#{config.version} - #{config.license}
-             // #{config.description}
-             // #{config.repository.url}\n"""
+prepend = """/* #{config.name} - v#{config.version} - #{config.license} */
+             /* #{config.description} */
+             /* #{config.repository.url} */\n"""
 
 # Bare coffeescript
 flour.compilers.coffee.bare = true
+
+# Build the demo html
+task "build:demo", ->
+  fs.writeFile "demo/index.html",
+    jade.renderFile("demo/index.jade", {config})
 
 # Update bower.json, to match package.json
 # Using npm version will therefore update bower
 task "build:bower", ->
   bower.version = config.version
-  fs.writeFile "bower.json", JSON.stringify(bower, null, 2) + "\n"
+  fs.writeFile "bower.json", JSON.stringify(bower, null, 2)
 
 # Remove directory, compile and uglify js
-task "build", ->
-  rmdir "build", (err) ->
-    if err
-      console.log(err)
-    else
-      compile "src/#{config.name}.coffee", "build/#{config.name}.js", (res) ->
-        fs.writeFile "build/#{config.name}.js", prepend + res
-        invoke "minify"
+task "build:src", ->
+  compile "src/#{config.name}.coffee", (res) ->
+    fs.writeFile "build/#{config.name}.js", prepend + res, ->
+      minify "build/#{config.name}.js", (res) ->
+        fs.writeFile "build/#{config.name}.min.js", prepend + res
 
-# Take js and uglify it
-task "minify", ->
-  minify "build/#{config.name}.js", "build/#{config.name}.min.js", (res) ->
-    fs.writeFile "build/#{config.name}.min.js", prepend + res
+task "build", ->
+  invoke "build:src"
+  invoke "build:demo"
+  invoke "build:bower"
 
 # Watch for changes
 task "watch", ->
   invoke "build"
-  watch "src/#{config.name}.coffee", -> invoke "build"
+  watch "src/#{config.name}.coffee", -> invoke "build:src"
+  watch "demo/index.jade", -> invoke "build:demo"
 
 # Lint js
 task "lint", "Check javascript syntax", ->

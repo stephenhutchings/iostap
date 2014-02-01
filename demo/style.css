@@ -14,7 +14,9 @@ body {
 }
 
 #wrapper {
-  padding: 12px;
+  width: 320px;
+  margin: auto;
+  padding: 0;
   font-weight: lighter;
 }
 
@@ -24,11 +26,19 @@ a {
   color: inherit;
 }
 
-.column {
+.column,
+footer {
   margin: 12px;
   width: 272px;
+}
+
+.column {
   float: left;
   border-bottom: 1px solid #00988d;
+}
+
+footer {
+  clear: left;
 }
 
 h1 {
@@ -49,6 +59,7 @@ pre {
   border-radius: 2px;
 }
 
+h4,
 hr,
 p,
 .well {
@@ -136,6 +147,10 @@ p,
   text-overflow: ellipsis;
 }
 
+pre {
+  overflow: scroll;
+}
+
 .response-active {
   opacity: 1;
   -webkit-transform: translate3d(0, 0, 0);
@@ -145,10 +160,19 @@ p,
   transform: translate3d(0, 0, 0);
 }
 
-@media screen and (min-width: 321px) {
+@media screen and (min-width: 640px) {
+  #wrapper {
+    width: auto;
+    padding: 12px;
+  }
+
   .column {
     min-height: 400px;
     border-top: 1px solid #00988d;
+  }
+
+  .column,
+  footer {
     margin: 24px;
   }
 

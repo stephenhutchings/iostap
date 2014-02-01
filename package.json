@@ -20,6 +20,7 @@
     "uglify-js": "~2.4.12",
     "coffee-script": "~1.7.0",
     "jshint": "~2.4.3",
-    "rimraf": "~2.2.6"
+    "rimraf": "~2.2.6",
+    "jade": "~1.1.5"
   }
 }

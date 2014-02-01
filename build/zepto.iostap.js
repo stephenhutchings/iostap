@@ -1,6 +1,6 @@
-// zepto.iostap - v0.0.3 - MIT
-// A micro-library for iOS-like tap events in the browser
-// https://github.com/stephenhutchings/zepto.iostap
+/* zepto.iostap - v0.0.3 - MIT */
+/* A micro-library for iOS-like tap events in the browser */
+/* https://github.com/stephenhutchings/zepto.iostap.git */
 (function(window, document) {
   var activeClass, attachEvents, checkForScroll, detachEvents, eventName, getFirstTouch, isTouch, minimumActiveTime, nearBuffer, nearEnough, onCancel, onEnd, onMove, onStart, parentIfText, scrollBuffer, toggleActiveState, touch, _cancel, _end, _move, _start;
   touch = {};
