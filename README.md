@@ -20,7 +20,7 @@ $("a.link").on("iostap", function(e) {
 
 ### Tell me more
 
-`iostap` is a plugin designed to work on top of [Zepto's](http://www.zeptojs.com/) pre-existing touch event module. It mimics the behaviour of tapping a button in the iOS ecosystem with a great degree of precision, affording developers who build hybrid web apps a greater user experience for their users. `iostap` is a super-lightweight library, weighing in at about 1kb, and doesn't add unecessary overhead client-side.
+`iostap` is a plugin designed to mimic the behaviour of tapping a button in the iOS ecosystem with a great degree of precision, affording developers who build hybrid web apps a greater user experience for their users. `iostap` is a super-lightweight library, weighing in at about 1kb, and doesn't add unecessary overhead client-side.
 
 Under the hood, there is more going on than you might think.
 
@@ -43,3 +43,9 @@ $ cake lint     # Lint the compiled javascript.
 ```
 
 Feel free to submit [issues](https://github.com/stephenhutchings/iostap/issues) or make [pull](https://github.com/stephenhutchings/iostap/pulls) requests.
+
+### Deploy gh-pages
+
+```
+git push -f origin master:gh-pages
+```
