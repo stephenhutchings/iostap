@@ -1,13 +1,13 @@
-## zepto.iostap
+## iostap
 
-See the [demo](http://stephenhutchings.github.io/zepto.iostap/demo/).
+See the [demo](http://stephenhutchings.github.io/iostap/demo/).
 
 ### How to use it
 
 Download the source files from the `build` directory, or use [Bower](http://www.bower.io/).
 
 ```bash
-$ bower install zepto.iostap
+$ bower install iostap
 ```
 
 Then you're good to go. You can listen for `"iostap"` events on any old element. For example:
@@ -20,7 +20,7 @@ $("a.link").on("iostap", function(e) {
 
 ### Tell me more
 
-`zepto.iostap` is a plugin designed to work on top of [Zepto's](http://www.zeptojs.com/) pre-existing touch event module. It mimics the behaviour of tapping a button in the iOS ecosystem with a great degree of precision, affording developers who build hybrid web apps a greater user experience for their users. `zepto.iostap` is a super-lightweight library, weighing in at about 1kb, and doesn't add unecessary overhead client-side.
+`iostap` is a plugin designed to work on top of [Zepto's](http://www.zeptojs.com/) pre-existing touch event module. It mimics the behaviour of tapping a button in the iOS ecosystem with a great degree of precision, affording developers who build hybrid web apps a greater user experience for their users. `iostap` is a super-lightweight library, weighing in at about 1kb, and doesn't add unecessary overhead client-side.
 
 Under the hood, there is more going on than you might think.
 
@@ -42,4 +42,4 @@ $ cake watch    # Watch for changes
 $ cake lint     # Lint the compiled javascript.
 ```
 
-Feel free to submit [issues](https://github.com/stephenhutchings/zepto.iostap/issues) or make [pull](https://github.com/stephenhutchings/zepto.iostap/pulls) requests.
+Feel free to submit [issues](https://github.com/stephenhutchings/iostap/issues) or make [pull](https://github.com/stephenhutchings/iostap/pulls) requests.
