@@ -64,7 +64,7 @@ defaults =
       scrolls = false
 
       while node.parentNode and isTouch
-        if scrolls = scrolls or node.scrollHeight > node.offsetHeight
+        if scrolls = /^(auto|scroll)$/.test getComputedStyle?(node).overflow
           break
         else
           node = node.parentNode
