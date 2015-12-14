@@ -1,4 +1,4 @@
-/* iostap - v1.0.0 - MIT */
+/* iostap - v1.0.1 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
 var defaults;
@@ -61,7 +61,7 @@ defaults = {
         var scrolls;
         scrolls = false;
         while (node.parentNode && isTouch) {
-          if (scrolls = scrolls || node.scrollHeight > node.offsetHeight) {
+          if (scrolls = /^(auto|scroll)$/.test(typeof getComputedStyle === "function" ? getComputedStyle(node).overflow : void 0)) {
             break;
           } else {
             node = node.parentNode;
