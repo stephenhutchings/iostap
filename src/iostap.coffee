@@ -83,7 +83,10 @@ defaults =
           el.classList.remove activeClass
 
     onStart = (e) ->
-      return if touch
+      if touch or
+         (e.target is document.activeElement and
+         e.target.nodeName.match(/^(INPUT|TEXTAREA)$/))
+        return
 
       window.clearTimeout timeout
 
