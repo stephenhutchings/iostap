@@ -1,4 +1,4 @@
-/* iostap - v1.0.1 - MIT */
+/* iostap - v1.0.2 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
 var defaults;
@@ -94,7 +94,7 @@ defaults = {
       };
       onStart = function(e) {
         var el;
-        if (touch) {
+        if (touch || (e.target === document.activeElement && e.target.nodeName.match(/^(INPUT|TEXTAREA)$/))) {
           return;
         }
         window.clearTimeout(timeout);
