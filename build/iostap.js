@@ -1,16 +1,6 @@
-/* iostap - v1.0.2 - MIT */
+/* iostap - v1.0.3 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
-var defaults;
-
-defaults = {
-  eventName: "iostap",
-  activeClass: "__active",
-  minActiveMS: 50,
-  buffer: 20,
-  maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35)
-};
-
 (function(root, factory) {
   if (typeof define === "function" && define.amd) {
     define([], factory);
@@ -20,6 +10,14 @@ defaults = {
     root.iostap = factory();
   }
 })(this, function() {
+  var defaults;
+  defaults = {
+    eventName: "iostap",
+    activeClass: "__active",
+    minActiveMS: 50,
+    buffer: 20,
+    maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35)
+  };
   return {
     initialize: function(options) {
       var activeClass, bindEvent, buffer, eventName, isTouch, maxDistance, minActiveMS, nearEnough, onCancel, onEnd, onMove, onStart, parentIfData, parentIfText, parentScrolls, timeout, toggleActiveState, touch, unbindEvent, _end, _move, _start;
