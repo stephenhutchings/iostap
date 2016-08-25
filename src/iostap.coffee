@@ -1,22 +1,6 @@
 # Creates a new event ("iostap"), which creates pseudo active
 # states ("__active") for all elements that are touched.
 
-defaults =
-  # Name of the event to be fired
-  eventName: "iostap"
-
-  # Class applied to every element in the tree on touch
-  activeClass: "__active"
-
-  # Mininum time for the element to be active, after the touch ends
-  minActiveMS: 50
-
-  # Buffer area around the element that is still considered active
-  buffer: 20
-
-  # Maximum distance travelled before the touch becomes inactive
-  maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35)
-
 ((root, factory) ->
   if typeof define is "function" and define.amd
     define [], factory
@@ -26,6 +10,23 @@ defaults =
     root.iostap = factory()
   return
 ) this, ->
+
+  defaults =
+    # Name of the event to be fired
+    eventName: "iostap"
+
+    # Class applied to every element in the tree on touch
+    activeClass: "__active"
+
+    # Mininum time for the element to be active, after the touch ends
+    minActiveMS: 50
+
+    # Buffer area around the element that is still considered active
+    buffer: 20
+
+    # Maximum distance travelled before the touch becomes inactive
+    maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35)
+
   initialize: (options = {}) ->
 
     # The touch object will store the current touch information
