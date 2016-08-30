@@ -11,7 +11,7 @@
   return
 ) this, ->
 
-  defaults =
+  options =
     # Name of the event to be fired
     eventName: "iostap"
 
@@ -21,14 +21,21 @@
     # Mininum time for the element to be active, after the touch ends
     minActiveMS: 50
 
-    # Buffer area around the element that is still considered active
+    # options.Buffer area around the element that is still considered active
     buffer: 20
 
     # Maximum distance travelled before the touch becomes inactive
     maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35)
 
-  initialize: (options = {}) ->
+    # Allow default behaviour and event propagation for events of this type
+    allowDefault: (e) ->
+      e.target.nodeName.match(/^(INPUT|TEXTAREA|SELECT)$/)
 
+  set: (overrides = {}) ->
+    for key, val of overrides when val?
+      options[key] = val
+
+  initialize: (overrides) ->
     # The touch object will store the current touch information
     touch = null
 
@@ -44,11 +51,7 @@
     _move   = if isTouch then "touchmove" else "mousemove"
     _end    = if isTouch then "touchend" else "mouseup"
 
-    eventName   = options.eventName   or defaults.eventName
-    activeClass = options.activeClass or defaults.activeClass
-    minActiveMS = options.minActiveMS or defaults.minActiveMS
-    buffer      = options.buffer      or defaults.buffer
-    maxDistance = options.maxDistance or defaults.maxDistance
+    @set(overrides)
 
     parentIfText = (node) ->
       if "tagName" of node then node else node.parentNode
@@ -76,12 +79,12 @@
       if isActive
         el = touch.el
         while el.parentNode
-          el.classList.add activeClass
+          el.classList.add options.activeClass
           break if el.dataset.nobubble
           el = el.parentNode
       else
-        for el in document.querySelectorAll("." + activeClass)
-          el.classList.remove activeClass
+        for el in document.querySelectorAll("." + options.activeClass)
+          el.classList.remove options.activeClass
 
     onStart = (e) ->
       if touch or
@@ -119,12 +122,12 @@
       if touch.parentScrollY isnt touch.scrollParent?.scrollTop
         return onCancel()
 
-      nearEnough = clientX > left - buffer and
-                   clientX < left + width + buffer and
-                   clientY > top - buffer and
-                   clientY < top + height + buffer and
-                   Math.abs(clientX - touch.offset.startX) < maxDistance and
-                   Math.abs(clientY - touch.offset.startY) < maxDistance
+      nearEnough = clientX > left - options.buffer and
+                   clientX < left + width + options.buffer and
+                   clientY > top - options.buffer and
+                   clientY < top + height + options.buffer and
+                   Math.abs(clientX - touch.offset.startX) < options.maxDistance and
+                   Math.abs(clientY - touch.offset.startY) < options.maxDistance
 
       toggleActiveState(nearEnough)
 
@@ -135,13 +138,14 @@
       unbindEvent(_end, onEnd, false)
 
       if nearEnough
-        e.preventDefault()
-        e.stopPropagation()
+        unless options.allowDefault(e)
+          e.preventDefault()
+          e.stopPropagation()
 
         {el, scrollParent} = touch
 
         tapEvent = document.createEvent "Event"
-        tapEvent.initEvent eventName, true, true
+        tapEvent.initEvent options.eventName, true, true
 
         if scrollParent
           _e = e.changedTouches[0]
@@ -153,7 +157,7 @@
         timeout = window.setTimeout (->
           toggleActiveState(false)
           el.dispatchEvent(tapEvent) if scrollParent
-        ), minActiveMS
+        ), options.minActiveMS
 
       touch = null
 

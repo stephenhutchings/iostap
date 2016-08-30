@@ -10,12 +10,44 @@ Download the source files from the `build` directory, or use [Bower](http://www.
 $ bower install iostap
 ```
 
+Initialize the module to start listening for tap events...
+
+```js
+window.iostap.initialize();
+```
+
 Then you're good to go. You can listen for `"iostap"` events on any old element. For example:
 
 ```js
 $("a.link").on("iostap", function(e) {
   console.log(e.currentTarget);
 })
+```
+
+You can pass options to the `initialize` method or `set` them later on.
+
+```js
+window.iostap.set({
+  // Name of the event to be fired
+  eventName: "iostap",
+
+  // Class applied to every element in the tree on touch
+  activeClass: "__active",
+
+  // Mininum time for the element to be active, after the touch ends
+  minActiveMS: 50,
+
+  // options.Buffer area around the element that is still considered active
+  buffer: 20,
+
+  // Maximum distance travelled before the touch becomes inactive
+  maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35),
+
+  // Allow default behaviour and event propagation for events of this type
+  allowDefault: function(e){
+    e.target.nodeName.match(/^(INPUT|TEXTAREA|SELECT)$/);
+  }
+});
 ```
 
 ### Tell me more
