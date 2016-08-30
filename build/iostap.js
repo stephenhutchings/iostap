@@ -1,4 +1,4 @@
-/* iostap - v1.0.3 - MIT */
+/* iostap - v1.1.0 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
 (function(root, factory) {
@@ -10,20 +10,34 @@
     root.iostap = factory();
   }
 })(this, function() {
-  var defaults;
-  defaults = {
+  var options;
+  options = {
     eventName: "iostap",
     activeClass: "__active",
     minActiveMS: 50,
     buffer: 20,
-    maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35)
+    maxDistance: Math.pow(window.innerHeight * window.innerWidth, 0.35),
+    allowDefault: function(e) {
+      return e.target.nodeName.match(/^(INPUT|TEXTAREA|SELECT)$/);
+    }
   };
   return {
-    initialize: function(options) {
-      var activeClass, bindEvent, buffer, eventName, isTouch, maxDistance, minActiveMS, nearEnough, onCancel, onEnd, onMove, onStart, parentIfData, parentIfText, parentScrolls, timeout, toggleActiveState, touch, unbindEvent, _end, _move, _start;
-      if (options == null) {
-        options = {};
+    set: function(overrides) {
+      var key, val, _results;
+      if (overrides == null) {
+        overrides = {};
       }
+      _results = [];
+      for (key in overrides) {
+        val = overrides[key];
+        if (val != null) {
+          _results.push(options[key] = val);
+        }
+      }
+      return _results;
+    },
+    initialize: function(overrides) {
+      var bindEvent, isTouch, nearEnough, onCancel, onEnd, onMove, onStart, parentIfData, parentIfText, parentScrolls, timeout, toggleActiveState, touch, unbindEvent, _end, _move, _start;
       touch = null;
       timeout = null;
       nearEnough = false;
@@ -31,11 +45,7 @@
       _start = isTouch ? "touchstart" : "mousedown";
       _move = isTouch ? "touchmove" : "mousemove";
       _end = isTouch ? "touchend" : "mouseup";
-      eventName = options.eventName || defaults.eventName;
-      activeClass = options.activeClass || defaults.activeClass;
-      minActiveMS = options.minActiveMS || defaults.minActiveMS;
-      buffer = options.buffer || defaults.buffer;
-      maxDistance = options.maxDistance || defaults.maxDistance;
+      this.set(overrides);
       parentIfText = function(node) {
         if ("tagName" in node) {
           return node;
@@ -73,7 +83,7 @@
           el = touch.el;
           _results = [];
           while (el.parentNode) {
-            el.classList.add(activeClass);
+            el.classList.add(options.activeClass);
             if (el.dataset.nobubble) {
               break;
             }
@@ -81,11 +91,11 @@
           }
           return _results;
         } else {
-          _ref = document.querySelectorAll("." + activeClass);
+          _ref = document.querySelectorAll("." + options.activeClass);
           _results1 = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             el = _ref[_i];
-            _results1.push(el.classList.remove(activeClass));
+            _results1.push(el.classList.remove(options.activeClass));
           }
           return _results1;
         }
@@ -127,7 +137,7 @@
         if (touch.parentScrollY !== ((_ref2 = touch.scrollParent) != null ? _ref2.scrollTop : void 0)) {
           return onCancel();
         }
-        nearEnough = clientX > left - buffer && clientX < left + width + buffer && clientY > top - buffer && clientY < top + height + buffer && Math.abs(clientX - touch.offset.startX) < maxDistance && Math.abs(clientY - touch.offset.startY) < maxDistance;
+        nearEnough = clientX > left - options.buffer && clientX < left + width + options.buffer && clientY > top - options.buffer && clientY < top + height + options.buffer && Math.abs(clientX - touch.offset.startX) < options.maxDistance && Math.abs(clientY - touch.offset.startY) < options.maxDistance;
         return toggleActiveState(nearEnough);
       };
       onEnd = function(e) {
@@ -138,11 +148,13 @@
         unbindEvent(_move, onMove, false);
         unbindEvent(_end, onEnd, false);
         if (nearEnough) {
-          e.preventDefault();
-          e.stopPropagation();
+          if (!options.allowDefault(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
           el = touch.el, scrollParent = touch.scrollParent;
           tapEvent = document.createEvent("Event");
-          tapEvent.initEvent(eventName, true, true);
+          tapEvent.initEvent(options.eventName, true, true);
           if (scrollParent) {
             _e = e.changedTouches[0];
             el = document.elementFromPoint(_e.pageX, _e.pageY) || el;
@@ -155,7 +167,7 @@
             if (scrollParent) {
               return el.dispatchEvent(tapEvent);
             }
-          }), minActiveMS);
+          }), options.minActiveMS);
         }
         return touch = null;
       };
