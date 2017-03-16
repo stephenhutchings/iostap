@@ -1,4 +1,4 @@
-/* iostap - v1.2.0 - MIT */
+/* iostap - v1.2.1 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
 (function(root, factory) {
@@ -67,7 +67,7 @@
       parentScrolls = function(node) {
         var scrolls;
         scrolls = false;
-        while (node.parentNode && isTouch) {
+        while (node.parentNode && isTouch && !isPointer) {
           if (scrolls = /^(auto|scroll)$/.test(typeof getComputedStyle === "function" ? getComputedStyle(node).overflow : void 0)) {
             break;
           } else {
@@ -117,13 +117,13 @@
         return bindEvent(_end, onEnd, false);
       };
       onMove = function(e) {
-        var clientX, clientY, height, left, top, width, _base, _base1, _e, _ref1, _ref2, _ref3;
+        var clientX, clientY, height, left, top, width, _base, _base1, _e, _ref1, _ref2, _ref3, _ref4;
         if (!touch) {
           return;
         }
-        _e = isTouch ? e.touches[0] : e;
+        _e = ((_ref1 = e.touches) != null ? _ref1[0] : void 0) || e;
         clientX = _e.clientX, clientY = _e.clientY;
-        _ref1 = touch.offset, width = _ref1.width, top = _ref1.top, left = _ref1.left, height = _ref1.height;
+        _ref2 = touch.offset, width = _ref2.width, top = _ref2.top, left = _ref2.left, height = _ref2.height;
         if ((_base = touch.offset).startX == null) {
           _base.startX = clientX;
         }
@@ -131,9 +131,9 @@
           _base1.startY = clientY;
         }
         if (touch.parentScrollY == null) {
-          touch.parentScrollY = (_ref2 = touch.scrollParent) != null ? _ref2.scrollTop : void 0;
+          touch.parentScrollY = (_ref3 = touch.scrollParent) != null ? _ref3.scrollTop : void 0;
         }
-        if (touch.parentScrollY !== ((_ref3 = touch.scrollParent) != null ? _ref3.scrollTop : void 0)) {
+        if (touch.parentScrollY !== ((_ref4 = touch.scrollParent) != null ? _ref4.scrollTop : void 0)) {
           return onCancel();
         }
         nearEnough = clientX > left - options.buffer && clientX < left + width + options.buffer && clientY > top - options.buffer && clientY < top + height + options.buffer && Math.abs(clientX - touch.offset.startX) < options.maxDistance && Math.abs(clientY - touch.offset.startY) < options.maxDistance;

@@ -1,6 +1,6 @@
 {
   "name": "iostap",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A micro-library for iOS-like tap events in the browser",
   "main": "iostap.js",
   "scripts": {
