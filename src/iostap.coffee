@@ -73,7 +73,7 @@
     parentScrolls = (node) ->
       scrolls = false
 
-      while node.parentNode and isTouch
+      while node.parentNode and isTouch and not isPointer
         if scrolls = /^(auto|scroll)$/.test getComputedStyle?(node).overflow
           break
         else
@@ -116,7 +116,7 @@
     onMove = (e) ->
       return unless touch
 
-      _e = if isTouch then e.touches[0] else e
+      _e = e.touches?[0] or e
 
       {clientX, clientY} = _e
       {width, top, left, height} = touch.offset
