@@ -46,10 +46,16 @@
     nearEnough =  false
 
     # Multi-device events
-    isTouch = "ontouchstart" of window
-    _start  = if isTouch then "touchstart" else "mousedown"
-    _move   = if isTouch then "touchmove" else "mousemove"
-    _end    = if isTouch then "touchend" else "mouseup"
+    isPointer = "onpointerdown" of window
+    isTouch   = "ontouchstart" of window
+
+    [_start, _move, _end] =
+      if isPointer
+        ["pointerdown", "pointermove", "pointerup"]
+      else if isTouch
+        ["touchstart", "touchmove", "touchend"]
+      else
+        ["mousedown", "mousemove", "mouseup"]
 
     @set(overrides)
 
@@ -176,7 +182,8 @@
     unbindEvent = (evt, fn, capture = false) ->
       window.removeEventListener(evt, fn, capture)
 
-    Backbone?.on("canceltap", onCancel)
+    window.Backbone?.on("canceltap", onCancel)
 
     bindEvent(_start, onStart, false)
     bindEvent("touchcancel", onCancel, false) if isTouch
+    bindEvent("pointercancel", onCancel, false) if isPointer
