@@ -1,4 +1,4 @@
-/* iostap - v1.1.0 - MIT */
+/* iostap - v1.2.0 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
 (function(root, factory) {
@@ -37,14 +37,13 @@
       return _results;
     },
     initialize: function(overrides) {
-      var bindEvent, isTouch, nearEnough, onCancel, onEnd, onMove, onStart, parentIfData, parentIfText, parentScrolls, timeout, toggleActiveState, touch, unbindEvent, _end, _move, _start;
+      var bindEvent, isPointer, isTouch, nearEnough, onCancel, onEnd, onMove, onStart, parentIfData, parentIfText, parentScrolls, timeout, toggleActiveState, touch, unbindEvent, _end, _move, _ref, _ref1, _start;
       touch = null;
       timeout = null;
       nearEnough = false;
+      isPointer = "onpointerdown" in window;
       isTouch = "ontouchstart" in window;
-      _start = isTouch ? "touchstart" : "mousedown";
-      _move = isTouch ? "touchmove" : "mousemove";
-      _end = isTouch ? "touchend" : "mouseup";
+      _ref = isPointer ? ["pointerdown", "pointermove", "pointerup"] : isTouch ? ["touchstart", "touchmove", "touchend"] : ["mousedown", "mousemove", "mouseup"], _start = _ref[0], _move = _ref[1], _end = _ref[2];
       this.set(overrides);
       parentIfText = function(node) {
         if ("tagName" in node) {
@@ -54,12 +53,12 @@
         }
       };
       parentIfData = function(el) {
-        var node, _ref, _ref1;
+        var node, _ref1, _ref2;
         node = el;
-        while (node.parentNode && !((_ref = node.dataset) != null ? _ref.touch : void 0)) {
+        while (node.parentNode && !((_ref1 = node.dataset) != null ? _ref1.touch : void 0)) {
           node = node.parentNode;
         }
-        if (node != null ? (_ref1 = node.dataset) != null ? _ref1.touch : void 0 : void 0) {
+        if (node != null ? (_ref2 = node.dataset) != null ? _ref2.touch : void 0 : void 0) {
           return node;
         } else {
           return el;
@@ -78,7 +77,7 @@
         return scrolls && node;
       };
       toggleActiveState = function(isActive) {
-        var el, _i, _len, _ref, _results, _results1;
+        var el, _i, _len, _ref1, _results, _results1;
         if (isActive) {
           el = touch.el;
           _results = [];
@@ -91,10 +90,10 @@
           }
           return _results;
         } else {
-          _ref = document.querySelectorAll("." + options.activeClass);
+          _ref1 = document.querySelectorAll("." + options.activeClass);
           _results1 = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            el = _ref[_i];
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            el = _ref1[_i];
             _results1.push(el.classList.remove(options.activeClass));
           }
           return _results1;
@@ -118,13 +117,13 @@
         return bindEvent(_end, onEnd, false);
       };
       onMove = function(e) {
-        var clientX, clientY, height, left, top, width, _base, _base1, _e, _ref, _ref1, _ref2;
+        var clientX, clientY, height, left, top, width, _base, _base1, _e, _ref1, _ref2, _ref3;
         if (!touch) {
           return;
         }
         _e = isTouch ? e.touches[0] : e;
         clientX = _e.clientX, clientY = _e.clientY;
-        _ref = touch.offset, width = _ref.width, top = _ref.top, left = _ref.left, height = _ref.height;
+        _ref1 = touch.offset, width = _ref1.width, top = _ref1.top, left = _ref1.left, height = _ref1.height;
         if ((_base = touch.offset).startX == null) {
           _base.startX = clientX;
         }
@@ -132,9 +131,9 @@
           _base1.startY = clientY;
         }
         if (touch.parentScrollY == null) {
-          touch.parentScrollY = (_ref1 = touch.scrollParent) != null ? _ref1.scrollTop : void 0;
+          touch.parentScrollY = (_ref2 = touch.scrollParent) != null ? _ref2.scrollTop : void 0;
         }
-        if (touch.parentScrollY !== ((_ref2 = touch.scrollParent) != null ? _ref2.scrollTop : void 0)) {
+        if (touch.parentScrollY !== ((_ref3 = touch.scrollParent) != null ? _ref3.scrollTop : void 0)) {
           return onCancel();
         }
         nearEnough = clientX > left - options.buffer && clientX < left + width + options.buffer && clientY > top - options.buffer && clientY < top + height + options.buffer && Math.abs(clientX - touch.offset.startX) < options.maxDistance && Math.abs(clientY - touch.offset.startY) < options.maxDistance;
@@ -192,12 +191,15 @@
         }
         return window.removeEventListener(evt, fn, capture);
       };
-      if (typeof Backbone !== "undefined" && Backbone !== null) {
-        Backbone.on("canceltap", onCancel);
+      if ((_ref1 = window.Backbone) != null) {
+        _ref1.on("canceltap", onCancel);
       }
       bindEvent(_start, onStart, false);
       if (isTouch) {
-        return bindEvent("touchcancel", onCancel, false);
+        bindEvent("touchcancel", onCancel, false);
+      }
+      if (isPointer) {
+        return bindEvent("pointercancel", onCancel, false);
       }
     }
   };
