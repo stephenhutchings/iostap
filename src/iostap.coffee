@@ -118,8 +118,8 @@
 
       _e = e.touches?[0] or e
 
-      {clientX, clientY} = _e
-      {width, top, left, height} = touch.offset
+      { clientX, clientY } = _e
+      { width, top, left, height } = touch.offset
 
       touch.offset.startX ?= clientX
       touch.offset.startY ?= clientY
@@ -148,13 +148,17 @@
           e.preventDefault()
           e.stopPropagation()
 
-        {el, scrollParent} = touch
+        _e = if isTouch and not isPointer then e.changedTouches[0] else e
+
+        { el, scrollParent } = touch
+        { pageX, pageY, clientX, clientY } = _e
+        { startX, startY } = touch.offset
 
         tapEvent = document.createEvent "Event"
         tapEvent.initEvent options.eventName, true, true
+        tapEvent.detail = { pageX, pageY, clientX, clientY, startX, startY }
 
         if scrollParent
-          _e = e.changedTouches[0]
           el = document.elementFromPoint(_e.pageX, _e.pageY) or el
         else
           el.dispatchEvent(tapEvent)
