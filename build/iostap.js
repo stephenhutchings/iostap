@@ -1,4 +1,4 @@
-/* iostap - v1.2.1 - MIT */
+/* iostap - v1.2.2 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
 (function(root, factory) {
@@ -140,7 +140,7 @@
         return toggleActiveState(nearEnough);
       };
       onEnd = function(e) {
-        var el, scrollParent, tapEvent, _e;
+        var clientX, clientY, el, pageX, pageY, scrollParent, startX, startY, tapEvent, _e, _ref1;
         if (!touch) {
           return;
         }
@@ -151,11 +151,21 @@
             e.preventDefault();
             e.stopPropagation();
           }
+          _e = isTouch && !isPointer ? e.changedTouches[0] : e;
           el = touch.el, scrollParent = touch.scrollParent;
+          pageX = _e.pageX, pageY = _e.pageY, clientX = _e.clientX, clientY = _e.clientY;
+          _ref1 = touch.offset, startX = _ref1.startX, startY = _ref1.startY;
           tapEvent = document.createEvent("Event");
           tapEvent.initEvent(options.eventName, true, true);
+          tapEvent.detail = {
+            pageX: pageX,
+            pageY: pageY,
+            clientX: clientX,
+            clientY: clientY,
+            startX: startX,
+            startY: startY
+          };
           if (scrollParent) {
-            _e = e.changedTouches[0];
             el = document.elementFromPoint(_e.pageX, _e.pageY) || el;
           } else {
             el.dispatchEvent(tapEvent);
