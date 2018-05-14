@@ -2,28 +2,34 @@ doctype html
 html.no-js
 head
   meta(charset="utf-8")
-  meta(http-equiv="X-UA-Compatible", content="IE=edge")
+  meta(http-equiv="X-UA-Compatible" content="IE=edge")
   title= config.name
-  meta(name="description", content=config.description)
-  meta(name="viewport", content="width=device-width, initial-scale=1")
-  link(rel="stylesheet", href="style.css", type="text/css")
+  meta(name="description" content=config.description)
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+  link(rel="stylesheet" href="style.css" type="text/css")
+  link(href="https://fonts.googleapis.com/css?family=Anonymous+Pro:700|PT+Serif" rel="stylesheet")
+
 body
   #wrapper
     .column
-      h1= config.name
+      h1
+        code= config.name
       p
         code iostap
-        |  is a plugin designed to mimic the behaviour of tapping a button in 
-        | the iOS ecosystem with a great degree of precision, affording 
-        | developers who build hybrid web apps a greater user experience for 
-        | their users. 
+        |  is a plugin designed to mimic the behaviour of tapping a button in
+        | the iOS ecosystem with a great degree of precision, affording
+        | developers who build hybrid web apps a greater experience for
+        | their users.
+        |
         code iostap
-        |  is a super-lightweight library, weighing in at about 1kb, and 
+        |  is a super-lightweight library, weighing in at about 1kb, and
         | doesn't add unecessary overhead client-side.
       p
-        | Download the source files from the 
-        code build 
-        | directory, or use 
+        | Download the source files from the
+        |
+        code build
+        |  directory, or use
+        |
         a(href="http://www.bower.io/") Bower
         | .
       .highlight.highlight-bash
@@ -31,15 +37,15 @@ body
           $ bower install iostap
     .column
       h4
-        | Active state
+        code Active state
       .well
         p.button
           | Button
       p
-        | The active state should be removed once the user moves their pointer 
+        | The active state should be removed once the user moves their pointer
         | a significant distance from the button. This cancels the
         code "iostap"
-        | event. Bringing the finger back to the button will re-instate the 
+        | event. Bringing the finger back to the button will re-instate the
         | active class.
       p
         pre.
@@ -49,13 +55,13 @@ body
           .button.__active {...}
     .column
       h4
-        | Scrolling parent
+        code Scrolling parent
       .well
         ul.list
           for country in ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas", "The","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burma","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo", "Democratic Republic of the","Congo", "Republic of the","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Timor-Leste","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia", "The","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Holy See","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea", "North","Korea", "South","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Namibia","Nauru","Nepal","Netherlands","Netherlands Antilles","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestinian Territories","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Sint Maarten","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"]
             li= country
       p
-        | The active state should be removed once the user scrolls. This 
+        | The active state should be removed once the user scrolls. This
         | cancels the
         code "iostap"
         | event.
@@ -63,7 +69,8 @@ body
     footer
       | #{config.name} v#{config.version}
       br
-      | Made by 
+      | Made by
+      |
       a(href="http://s-ings.com")= config.author
       br
       a(href=config.repository.url) View on Github
@@ -85,17 +92,17 @@ body
       div.classList.add("response");
 
       body.appendChild(div, "beforeStart");
-      
+
       div.offsetLeft;
       div.classList.add("response-active");
 
       window.setTimeout(function(){
         div.classList.remove("response-active")
-      }, 1000);
+      }, 1500);
 
       window.setTimeout(function(){
         body.removeChild(div);
-      }, 1500);
+      }, 3000);
     })
 
   script(type="text/javascript").

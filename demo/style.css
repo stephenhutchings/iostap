@@ -2,15 +2,17 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: #00a99d;
+  background-color: #fff;
   position: relative;
-  color: #fff;
-  font-family: sans-serif;
-  font-size: 14px;
+  color: #222;
+  font-family: Charter, serif;
+  font-size: 16px;
   line-height: 1.4;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
+  height: 100%;
+}
+
+::selection {
+  background: rgba(27, 180, 218, 0.5);
 }
 
 #wrapper {
@@ -26,6 +28,10 @@ a {
   color: inherit;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 .column,
 footer {
   margin: 12px;
@@ -34,11 +40,15 @@ footer {
 
 .column {
   float: left;
-  border-bottom: 1px solid #00988d;
+  border-bottom: 1px solid #ff0f68;
 }
 
 footer {
   clear: left;
+}
+
+footer a {
+  font-size: inherit;
 }
 
 h1 {
@@ -54,9 +64,30 @@ h4 {
 }
 
 pre {
-  background-color: #4cbfb4;
+  background-color: #f9f8f9;
+  color: #3a3739;
   padding: 4px;
   border-radius: 2px;
+  font-size: 93%;
+  line-height:  1.3em;
+}
+
+pre,
+code,
+.button,
+strong,
+a,
+.response,
+footer {
+  font-family: Anonymous Pro, monospace;
+}
+
+h4 code {
+  font-weight: bold;
+}
+
+a, strong, .button, code {
+  font-size:  1.12em;
 }
 
 h4,
@@ -67,13 +98,12 @@ p,
 }
 
 .well {
-  background-color: #00988d;
+  background-color: #f9f8f9;
   border-radius: 4px;
   overflow: hidden;
 }
 
 .button {
-  color: #666;
   margin: 12px;
   display: block;
   height: 23px;
@@ -81,20 +111,11 @@ p,
   padding: 8px;
   text-align: center;
   background-color: #fff;
-  background-image: -webkit-linear-gradient(top, #fff 0%, #eee 100%);
-  background-image: -moz-linear-gradient(top, #fff 0%, #eee 100%);
-  background-image: -ms-linear-gradient(top, #fff 0%, #eee 100%);
-  background-image: -o-linear-gradient(top, #fff 0%, #eee 100%);
   border-radius: 2px;
   text-decoration: none;
-}
-
-.button.__active {
-  padding: 9px 8px 7px;
-  background-image: -webkit-linear-gradient(bottom, #eee 0%, #ddd 100%);
-  background-image: -moz-linear-gradient(bottom, #eee 0%, #ddd 100%);
-  background-image: -ms-linear-gradient(bottom, #eee 0%, #ddd 100%);
-  background-image: -o-linear-gradient(bottom, #eee 0%, #ddd 100%);
+  border: 1px solid #e4dce1;
+  transition: background-color 300ms;
+  cursor: pointer;
 }
 
 .list {
@@ -103,45 +124,40 @@ p,
   list-style: none;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-  height: 240px;
+  height: 236px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 13px;
 }
 
 .list li {
   height: 23px;
   line-height: 24px;
   padding: 8px;
-  border-bottom: 1px solid #00a99d;
-  -webkit-transition: background-color 300ms;
-  -moz-transition: background-color 300ms;
-  -ms-transition: background-color 300ms;
-  -o-transition: background-color 300ms;
   transition: background-color 300ms;
 }
 
+.list li + li {
+  border-top: 1px solid #e4dce1;
+}
+
+.button.__active,
 .list li.__active {
-  background-color: #007f73;
+  background-color: #e4dce1;
 }
 
 .response {
   position: fixed;
+  color: #fff;
   top: 0;
   left: 12px;
   right: 12px;
   border-radius: 0 0 4px 4px;
-  background-color: #007f73;
+  background-color: #ff0f68;
   padding: 8px;
   opacity: 0;
-  font-family: monospace;
-  -webkit-transform: translate3d(0, -100%, 0);
-  -moz-transform: translate3d(0, -100%, 0);
-  -ms-transform: translate3d(0, -100%, 0);
-  -o-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
-  -webkit-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
-  -moz-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
-  -ms-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
-  -o-transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
-  transition: all 600ms cubic-bezier(.65,.26,.56,1.23);
+  transition: all 400ms cubic-bezier(.65,.26,.56,1.23);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -153,22 +169,33 @@ pre {
 
 .response-active {
   opacity: 1;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
 @media screen and (min-width: 640px) {
   #wrapper {
-    width: auto;
-    padding: 12px;
+    width: 960px;
+    padding: 12vw;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .response {
+    right: auto;
+    left: 50%;
+    width: 912px;
+    margin-left: -456px;
+    box-sizing: border-box;
   }
 
   .column {
-    min-height: 400px;
-    border-top: 1px solid #00988d;
+    min-height: 392px;
+    padding: 12px 0;
+    border-top: 1px solid #ff0f68;
   }
 
   .column,

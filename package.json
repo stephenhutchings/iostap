@@ -1,10 +1,11 @@
 {
   "name": "iostap",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "A micro-library for iOS-like tap events in the browser",
   "main": "iostap.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cake build",
+    "watch": "nodemon npm run build"
   },
   "repository": {
     "type": "git",
@@ -15,12 +16,12 @@
   "bugs": {
     "url": "https://github.com/stephenhutchings/iostap/issues"
   },
-  "dependencies": {
-    "flour": "~0.5.6",
-    "uglify-js": "~2.4.12",
-    "coffee-script": "~1.7.0",
-    "jshint": "~2.4.3",
-    "rimraf": "~2.2.6",
-    "jade": "~1.1.5"
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "coffeescript": "^2.3.0",
+    "pug": "^2.0.3",
+    "uglify-js": "^3.3.25",
+    "babel-preset-es2015-allow-top-level-this": "0.0.1"
   }
 }

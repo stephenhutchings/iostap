@@ -21,7 +21,7 @@
     # Mininum time for the element to be active, after the touch ends
     minActiveMS: 50
 
-    # options.Buffer area around the element that is still considered active
+    # Buffer area around the element that is still considered active
     buffer: 20
 
     # Maximum distance travelled before the touch becomes inactive
