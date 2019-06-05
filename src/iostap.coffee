@@ -62,6 +62,14 @@
     parentIfText = (node) ->
       if "tagName" of node then node else node.parentNode
 
+    parentIsReact = (el) ->
+      node = el
+
+      while node.parentNode and not node._reactRootContainer
+        node = node.parentNode
+
+      if node?._reactRootContainer then true else false
+
     parentIfData = (el) ->
       node = el
 
@@ -93,6 +101,8 @@
           el.classList.remove options.activeClass
 
     onStart = (e) ->
+      if parentIsReact(e.target)
+        return
       if touch or
          (e.target is document.activeElement and
          e.target.nodeName.match(/^(INPUT|TEXTAREA)$/))
