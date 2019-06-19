@@ -6,7 +6,7 @@
     "stephenhutchings <stephen@creativelicence.com.au>"
   ],
   "description": "A micro-library for iOS-like tap events in the browser",
-  "main": "build/iostap.min.js",
+  "main": "build/iostap.js",
   "keywords": [
     "touch",
     "tap",
