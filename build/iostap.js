@@ -1,4 +1,4 @@
-/* iostap - v1.3.0 - MIT */
+/* iostap - v1.3.1 - MIT */
 /* A micro-library for iOS-like tap events in the browser */
 /* https://github.com/stephenhutchings/iostap.git */
 "use strict";
