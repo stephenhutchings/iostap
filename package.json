@@ -20,7 +20,7 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "coffeescript": "^2.3.0",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "uglify-js": "^3.3.25",
     "babel-preset-es2015-allow-top-level-this": "0.0.1"
   }
