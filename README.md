@@ -1,6 +1,6 @@
 ## iostap
 
-See the [demo](http://stephenhutchings.github.io/iostap/demo/).
+See the [demo](https://stephenhutchings.github.io/iostap/demo/).
 
 ### How to use it
 
